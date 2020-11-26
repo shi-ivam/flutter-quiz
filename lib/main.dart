@@ -15,34 +15,56 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   var questionsIndex = 0;
   var questionsComplete = false;
-
+  var totalPoints = 0;
   var questions = [
     {
       "title": "What is Your Favourite Color?",
-      "answers": ["Orange 1", "Red 1", "Blue 1", "Pink 1"]
+      "answers": [
+        {"name": "White", "points": 10},
+        {"name": "Black", "points": 2},
+        {"name": "Red", "points": 5},
+        {"name": "Orange", "points": 7},
+      ]
     },
     {
-      "title": "What is Your Favourite Color 2?",
-      "answers": ["Orange 2", "Red 2", "Blue 2", "Pink 2"]
+      "title": "What is Your Favourite Animal?",
+      "answers": [
+        {"name": "Lion", "points": 5},
+        {"name": "Rabbit", "points": 10},
+        {"name": "Dog", "points": 10},
+        {"name": "Cat", "points": 7},
+      ]
     },
     {
-      "title": "What is Your Favourite Color 3?",
-      "answers": ["Orange 3", "Red 3", "Blue 3", "Pink 3"]
+      "title": "What is Your Favourite Icecream?",
+      "answers": [
+        {"name": "Cookie & Cream", "points": 10},
+        {"name": "Chocolate", "points": 10},
+        {"name": "Vannila", "points": 10},
+        {"name": "Black Current", "points": 10},
+      ]
     },
     {
-      "title": "What is Your Favourite Color 4?",
-      "answers": ["Orange 4", "Red 4", "Blue 4", "Pink 4"]
+      "title": "What is Your Favourite Color?",
+      "answers": [
+        {"name": "Red 1", "points": 10},
+        {"name": "Red 1", "points": 10},
+        {"name": "Red 1", "points": 10},
+        {"name": "Red 1", "points": 10},
+      ]
     },
   ];
 
-  void _changeQuestionIndex() {
+  void _changeQuestionIndex(argPoints) {
     if (questionsIndex == 3) {
       setState(() {
         questionsComplete = true;
+        totalPoints = totalPoints + argPoints;
       });
     } else {
       setState(() {
         questionsIndex = questionsIndex + 1;
+        totalPoints = totalPoints + argPoints;
       });
     }
   }
@@ -59,9 +81,21 @@ class _MyAppState extends State<MyApp> {
           padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
           child: questionsComplete == true
               ? Center(
-                  child: Text(
-                    'Completed',
-                    style: TextStyle(fontSize: 34),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Completed',
+                        style: TextStyle(fontSize: 34),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Score : " + totalPoints.toString(),
+                          style: TextStyle(fontSize: 24),
+                        ),
+                      ),
+                    ],
                   ),
                 )
               : Column(
@@ -96,9 +130,9 @@ class _MyAppState extends State<MyApp> {
                           padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
                           child: Column(
                             children: [
-                              ...(questions[questionsIndex]['answers']
-                                      as List<String>)
-                                  .map((e) => Answer(e, _changeQuestionIndex))
+                              ...(questions[questionsIndex]['answers'] as List)
+                                  .map((e) => Answer(e["name"],
+                                      _changeQuestionIndex, e["points"]))
                                   .toList()
                             ],
                           ),

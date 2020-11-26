@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class Answer extends StatelessWidget {
   final String answerText;
   final Function changeQuestionIndex;
-  Answer(this.answerText, this.changeQuestionIndex);
+  final int point;
+  Answer(this.answerText, this.changeQuestionIndex, this.point);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class Answer extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          changeQuestionIndex();
+          changeQuestionIndex(this.point);
         },
       ),
     );
