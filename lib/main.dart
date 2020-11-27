@@ -95,6 +95,25 @@ class _MyAppState extends State<MyApp> {
                           style: TextStyle(fontSize: 24),
                         ),
                       ),
+                      Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Container(
+                          color: Colors.blue[200],
+                          child: FlatButton(
+                            onPressed: () {
+                              setState(() {
+                                questionsIndex = 0;
+                                questionsComplete = false;
+                                totalPoints = 0;
+                              });
+                            },
+                            child: Icon(
+                              Icons.restore,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 )
